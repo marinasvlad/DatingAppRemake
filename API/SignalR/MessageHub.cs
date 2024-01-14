@@ -63,12 +63,12 @@ public class MessageHub : Hub
             Content = createMessageDto.Content
         };
 
-        _messageRepository.AddMessage(message);
+         _messageRepository.AddMessage(message);
 
         if(await _messageRepository.SaveallAsync()) 
         {
             var group = GetGroupName(sender.UserName, recipient.UserName);
-            await Clients.Group(group).SendAsync("New message", _mapper.Map<MessageDto>(message));
+            await Clients.Group(group).SendAsync("NewMessage", _mapper.Map<MessageDto>(message));
         }
 
     }

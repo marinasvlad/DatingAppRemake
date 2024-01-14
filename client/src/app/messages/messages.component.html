@@ -60,7 +60,7 @@
                     <strong>{{message.recipientUsername | titlecase}}</strong>
                 </div>
                 <div *ngIf="container !== 'Outbox'">
-                    <img class="img-circle rounded-circle me-2" src="{{message.senderUsername || './assets/user.png'}}" alt="recipient photo">
+                    <img class="img-circle rounded-circle me-2" src="{{message.senderPhotoUrl || './assets/user.png'}}" alt="recipient photo">
                     <strong>{{message.recipientUsername | titlecase}}</strong>
                 </div>                
             </td>
