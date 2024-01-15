@@ -4,7 +4,9 @@ public class PresenceTracker
 {
     private static readonly Dictionary<string, List<string>> OnlineUsers = new Dictionary<string, List<string>>();
 
-    public Task UserConnected(string username, string connectionId){
+    public Task<bool> UserConnected(string username, string connectionId){
+        bool isOnline = false;
+
         lock(OnlineUsers)
         {
             if(OnlineUsers.ContainsKey(username))
@@ -14,26 +16,29 @@ public class PresenceTracker
             else
             {
                 OnlineUsers.Add(username, new List<string>{connectionId});
+                isOnline = true;
             }
         }
-            return Task.CompletedTask;
+            return Task.FromResult(isOnline);
 
     }
 
-    public Task UserDisconnected(string username, string connectionId)
+    public Task<bool> UserDisconnected(string username, string connectionId)
     {
+        bool isOfline = false;
         lock(OnlineUsers)
         {
-            if(!OnlineUsers.ContainsKey(username)) return Task.CompletedTask;
+            if(!OnlineUsers.ContainsKey(username)) return Task.FromResult(isOfline);
 
             OnlineUsers[username].Remove(connectionId);
 
             if(OnlineUsers[username].Count == 0)
             {
                 OnlineUsers.Remove(username);
+                isOfline = true;
             }
         }
-        return Task.CompletedTask;
+        return Task.FromResult(isOfline);
     }
 
     public Task<string[]> GetOnlineUsers(){
