@@ -10,7 +10,7 @@ primary_region = "otp"
   image = "marinasvlad/datingapp:latest"
 
 [env]
-  ASPNEETCORE_URLS="https://+:8080"
+  ASPNEETCORE_URLS="http://+:8080"
   CloudinarySettings__CloudName="dwdycwy7b"
   CloudinarySettings__ApiKey="534555286626135"
 
